@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "592661765920",
+    "project_id": "chkidsapp",
+    "storage_bucket": "chkidsapp.firebasestorage.app"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:592661765920:android:d18ebde6427db17e54c145",
+        "android_client_info": {
+          "package_name": "com.example.ch_kids"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyD31Pe201SPDTNlz9tlGN46W-ffTREZyuA"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
