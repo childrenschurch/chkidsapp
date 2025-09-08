@@ -13,7 +13,7 @@ const firebaseConfig = {
   projectId: "chkidsapp",
   storageBucket: "chkidsapp.firebasestorage.app",
   messagingSenderId: "592661765920",
-  appId: "1:592661765920:web:cbfb11a5088927ca54c145",
+  appId: "1:592661765920:web:81b6f85f424de0d354c145",
 };
 
 // Initialize Firebase
