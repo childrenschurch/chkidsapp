@@ -33,6 +33,11 @@ migrate_working_dir/
 /build/
 /coverage/
 
+# Sensitive files
+lib/firebase_options.dart
+android/local.properties
+.env
+
 # Symbolication related
 app.*.symbols
 
