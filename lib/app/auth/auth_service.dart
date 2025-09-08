@@ -10,7 +10,7 @@ class AuthService {
   final FirebaseAuth _auth = FirebaseAuth.instance;
   final GoogleSignIn _googleSignIn = GoogleSignIn(
     clientId:
-        '784800493341-dc0e57fol6e6rojpoctoe7iq56vobq1s.apps.googleusercontent.com',
+        '784800493341-mdut9ptokfvr5mjhu431do14haghb33s.apps.googleusercontent.com',
   );
 
   Stream<User?> get userChanges => _auth.userChanges();

@@ -3,16 +3,16 @@
     "platforms": {
       "android": {
         "default": {
-          "projectId": "chkidsapp",
-          "appId": "1:592661765920:android:d18ebde6427db17e54c145",
+          "projectId": "chkidsapp-471509",
+          "appId": "1:784800493341:android:YOUR_ANDROID_APP_ID",
           "fileOutput": "android/app/google-services.json"
         }
       },
       "dart": {
         "lib/firebase_options.dart": {
-          "projectId": "chkidsapp",
+          "projectId": "chkidsapp-471509",
           "configurations": {
-            "web": "1:592661765920:web:d2b06f30087eb7cd54c145"
+            "web": "1:784800493341:web:171ff26f09569da1ab3bf4"
           }
         }
       }
