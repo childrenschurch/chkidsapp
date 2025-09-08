@@ -1,7 +1,5 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:google_sign_in/google_sign_in.dart';
-// import 'package:cloud_firestore/cloud_firestore.dart'; // Removed for now
-
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 final authServiceProvider = Provider<AuthService>((ref) => AuthService());
@@ -24,6 +22,7 @@ class AuthService {
     return await _auth.signInAnonymously();
   }
 
+  /// Call this from your UI for all platforms. On web, use GoogleSignInButton widget for the button.
   Future<User?> signInWithGoogle() async {
     try {
       print('[AuthService] Starting Google sign-in...');
@@ -38,15 +37,18 @@ class AuthService {
       final GoogleSignInAuthentication? googleAuth =
           await googleUser.authentication;
       if (googleAuth == null) {
-        print('[AuthService] Google authentication object is null.');
+        print(
+            '[AuthService] Google authentication object is null. googleUser: $googleUser');
         return null;
       }
       if (googleAuth.accessToken == null) {
-        print('[AuthService] Google authentication missing accessToken.');
+        print(
+            '[AuthService] Google authentication missing accessToken. googleAuth: $googleAuth');
         return null;
       }
       if (googleAuth.idToken == null) {
-        print('[AuthService] Google authentication missing idToken.');
+        print(
+            '[AuthService] Google authentication missing idToken. googleAuth: $googleAuth, accessToken: ${googleAuth.accessToken}');
         return null;
       }
       print(
@@ -62,17 +64,18 @@ class AuthService {
       } catch (e) {
         print(
             '[AuthService] Firebase signInWithCredential failed: ${e.toString()}');
+        print('[AuthService] Credential used: $credential');
         return null;
       }
       User? user = result.user;
       if (user == null) {
-        print('[AuthService] No Firebase user after sign-in.');
+        print('[AuthService] No Firebase user after sign-in. result: $result');
         return null;
       }
       print(
           '[AuthService] Firebase user: uid=${user.uid}, email=${user.email}');
       if (user.email == null) {
-        print('[AuthService] Firebase user email is null! Cannot continue.');
+        print('[AuthService] Firebase user email is null! user: $user');
         await _auth.signOut();
         return null;
       }

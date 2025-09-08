@@ -19,7 +19,7 @@
     }
   },
   "hosting": {
-    "site": "chkids",
+    "site": "chkidsapp",
     "public": "build/web",
     "ignore": ["firebase.json", "**/.*", "**/node_modules/**"],
     "rewrites": [
