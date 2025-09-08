@@ -12,16 +12,6 @@ class AuthService {
 
   Stream<User?> get userChanges => _auth.userChanges();
 
-  Future<UserCredential> signInWithEmail(String email, String password) async {
-    return await _auth.signInWithEmailAndPassword(
-        email: email, password: password);
-  }
-
-  Future<UserCredential> signUpWithEmail(String email, String password) async {
-    return await _auth.createUserWithEmailAndPassword(
-        email: email, password: password);
-  }
-
   Future<void> signOut() async {
     await _auth.signOut();
     await _googleSignIn.signOut();
@@ -33,40 +23,62 @@ class AuthService {
 
   Future<User?> signInWithGoogle() async {
     try {
-      print('Starting Google sign-in...');
+      print('[AuthService] Starting Google sign-in...');
       final GoogleSignInAccount? googleUser = await _googleSignIn.signIn();
       if (googleUser == null) {
-        print('Google sign-in cancelled by user.');
+        print(
+            '[AuthService] Google sign-in cancelled by user or popup blocked.');
         return null;
       }
-      print('Google user: ${googleUser.email}, id: ${googleUser.id}');
-      final GoogleSignInAuthentication googleAuth =
-          await googleUser.authentication;
       print(
-          'Google auth: accessToken=${googleAuth.accessToken}, idToken=${googleAuth.idToken}');
+          '[AuthService] Google user: email=${googleUser.email}, id=${googleUser.id}');
+      final GoogleSignInAuthentication? googleAuth =
+          await googleUser.authentication;
+      if (googleAuth == null) {
+        print('[AuthService] Google authentication object is null.');
+        return null;
+      }
+      if (googleAuth.accessToken == null) {
+        print('[AuthService] Google authentication missing accessToken.');
+        return null;
+      }
+      if (googleAuth.idToken == null) {
+        print('[AuthService] Google authentication missing idToken.');
+        return null;
+      }
+      print(
+          '[AuthService] Google auth: accessToken=${googleAuth.accessToken}, idToken=${googleAuth.idToken}');
       final credential = GoogleAuthProvider.credential(
         accessToken: googleAuth.accessToken,
         idToken: googleAuth.idToken,
       );
-      print('Signing in with Firebase credential...');
-      UserCredential result = await _auth.signInWithCredential(credential);
-      User? user = result.user;
-      print('Firebase user: ${user?.uid}, email: ${user?.email}');
-      if (user == null) {
-        print('No Firebase user after sign-in.');
+      print('[AuthService] Signing in with Firebase credential...');
+      UserCredential result;
+      try {
+        result = await _auth.signInWithCredential(credential);
+      } catch (e) {
+        print(
+            '[AuthService] Firebase signInWithCredential failed: ${e.toString()}');
         return null;
       }
+      User? user = result.user;
+      if (user == null) {
+        print('[AuthService] No Firebase user after sign-in.');
+        return null;
+      }
+      print(
+          '[AuthService] Firebase user: uid=${user.uid}, email=${user.email}');
       if (user.email == null) {
-        print('Firebase user email is null! Cannot continue.');
+        print('[AuthService] Firebase user email is null! Cannot continue.');
         await _auth.signOut();
         return null;
       }
-      // Removed Firestore related code for now.
+      print('[AuthService] Google sign-in successful!');
       return user;
     } catch (e, stack) {
-      print('signInWithGoogle error: ${e.toString()}');
-      print('Stack trace: ${stack.toString()}');
-      rethrow;
+      print('[AuthService] signInWithGoogle error: ${e.toString()}');
+      print('[AuthService] Stack trace: ${stack.toString()}');
+      return null;
     }
   }
 
