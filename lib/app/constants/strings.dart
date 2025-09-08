@@ -1,16 +1,15 @@
-
 class AppStrings {
   static const String appName = 'CH Kids';
-  static const String tagline = 'Raising Kingdom Kids Together';
+  static const String tagline = 'Raising an Apostolic Generation';
   static const String googleSignIn = 'Sign in with Google';
   static const String ministryName = 'Christ\'s Heart Ministries International';
-  
+
   // Home Screen
   static const String newService = 'New Service';
   static const String servicesHistory = 'Services History';
   static const String childrenRecords = 'Children Records';
   static const String parentsRecords = 'Parents Records';
-  
+
   // New Service Form
   static const String serviceName = 'Service Name';
   static const String serviceDate = 'Service Date';
